@@ -7,6 +7,10 @@
 int *random_array(int count)
 {
     int *array = calloc(count, sizeof(int));
+    if(array == NULL){
+        printf("\ncalloc error!\n");
+        exit(1);
+    }
     for (int i = 0; i < count; i++)
     {
         int random = rand() % count;
