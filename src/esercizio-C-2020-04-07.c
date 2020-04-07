@@ -7,54 +7,84 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #define SEPARETOR " "
 int *randomNumber;
 
+void generateRandomString(char *inputString);
+void randomNumberSequence(int upperLimit);
+int isValid(int index);
+int wordCounter(char *inputString);
+char* randomWord(char *inputString, int index);
+
 int main(int argc, char **argv) {
 
-	char str[] = "hello world mi chiamo pino sono date delle stringhe";
+	char *str = "hello world mi chiamo pino sono date delle stringhe";
 	generateRandomString(str);
 	return 0;
 }
 
 void generateRandomString(char *inputString) {
 	int stringLength = wordCounter(inputString);
-	char *outputString;
-	randomNumber = calloc(stringLength, sizeof(int));
+	int dim = 1;
+	char *outputString = calloc(dim, sizeof(char));
+	char *tmpString;
 
+	randomNumber = calloc(stringLength, sizeof(int));
+	randomNumberSequence(stringLength);
+
+	for (int i = 0; i < stringLength; i++) {
+		tmpString = randomWord(inputString, randomNumber[i]);
+		strcat(tmpString, SEPARETOR);
+
+		dim = dim + strlen(tmpString) + 1;
+
+		outputString = realloc(outputString, dim * sizeof(char));
+		strcat(outputString, tmpString);
+	}
+	printf("Original string: %s\n", inputString);
+	printf("Random string: %s\n", outputString);
+
+	return;
 }
 
 void randomNumberSequence(int upperLimit) {
-	unsigned random = 0;
-	randomNumber = calloc(upperLimit,sizeof(int));
+	randomNumber = calloc(upperLimit, sizeof(int));
 
 	for (int i = 0; i < upperLimit; i++) {
-
-		if(i==0)
-			randomNumber[i]= rand() % upperLimit;
-		else{
-			 while(isValid ==0){
-
+		randomNumber[i] = rand() % upperLimit;
+		if (i > 0) {
+			while (isValid(i) == 0) {
+				int tmp = rand() % upperLimit;
+				randomNumber[i] = tmp;
 			}
-
 		}
-		random = rand() % upperLimit;
-
 	}
 
 	return;
 }
 
-int wordCounter(char *inputString) {
-	int count = 0;
+int isValid(int index) {
+	int bool = 1;
+	for (int i = index - 1; i > 0; i--) {
+		if (randomNumber[i] == randomNumber[index])
+			bool=0;
+	}
+	return bool;
+}
 
+int wordCounter(char *inputString) {
+	int count = 1;
+	char *copy = strdup(inputString);
 	char *token;
-	token = strtok(inputString, SEPARETOR);
+
+	token = strtok(copy, SEPARETOR);
+
 	while (token != NULL) {
 		token = strtok(NULL, SEPARETOR);
 		count++;
 	}
-	return count;
+	return count - 1;
 }
 
 char* randomWord(char *inputString, int index) {
