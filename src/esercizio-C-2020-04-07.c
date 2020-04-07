@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <string.h>
 
+
+
 #define NUM_CHARS 30
+
+
 
 char ** random_char_array(char ** char_array,int length){
 
@@ -25,7 +28,6 @@ char ** random_char_array(char ** char_array,int length){
 			}
 	}
 
-
 	char ** char_array_random=(char **)malloc(length * sizeof (char *));
 
 	for(int i=0;i<length;++i)
@@ -33,9 +35,6 @@ char ** random_char_array(char ** char_array,int length){
 
 
 	return char_array_random;
-
-
-
 }
 
 
@@ -54,7 +53,6 @@ int main(int argc, char **argv) {
 		tokens[n_tkns]=tkn;
 		n_tkns++;
 
-
 		// ho definito una dimensione massima NUM_CHARS anzichè usare
 		// la system call realloc (che ho lasciato commentatata qui sotto)
 		//perchè dopo la 4a iterazione mi dava l'errore
@@ -62,12 +60,10 @@ int main(int argc, char **argv) {
 
 		//tokens=(char **)realloc(tokens,n_tkns*sizeof(char *));
 
-
 		tkn=strtok(NULL,s);
 	}
 
 	tokens=random_char_array(tokens,n_tkns);
-
 
 	for(int i=0; i<n_tkns;++i)
 		printf("%s ",tokens[i]);
