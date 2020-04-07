@@ -52,7 +52,6 @@ int main(int argc, char *argv[])
     }
 
     free(random_order);
-    free(new_line);
   
     return 0;
 }
