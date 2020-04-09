@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 #include <unistd.h>
+#include <ctype.h>
 #include <errno.h>
+#include <time.h>
 
 /*
  ***randomizzare le parole***
@@ -26,6 +27,7 @@ esempio:
 output:
 "mi stringhe chiamo pino sono date world delle hello"
  */
+
 char * get_word(char * input_str, unsigned int n);
 void random_words(char * input_str);
 unsigned int * generate_random_index(unsigned int n);
@@ -46,6 +48,9 @@ int main(int argc, char *argv[]) {
 unsigned int * generate_random_index(unsigned int n) {
 	unsigned int * rand_index = calloc(n, sizeof(int));
 
+	time_t t = time(NULL);
+	srand(t);
+
 	unsigned int lower = 0;
 	unsigned int upper = n - 1;
 
@@ -56,12 +61,14 @@ unsigned int * generate_random_index(unsigned int n) {
 
 	for (int i = 0; i < n; i++) {
 		rand_index[i] = (rand() % (upper - lower + 1)) + lower;
+
 		if (i > 0) {
 			while (is_repeated(rand_index, i) != 0) {
 				rand_index[i] = (rand() % (upper - lower + 1)) + lower;
 			}
 		}
 	}
+
 	return rand_index;
 }
 
@@ -118,14 +125,14 @@ void random_words(char * input_str) {
 }
 
 unsigned int is_repeated(unsigned int * random_index, unsigned int dim) {
-	int check = 0;
+	int rep = 0;
 
 	for (int i = dim - 1; i >= 0; i--) {
 		if (random_index[dim] == random_index[i])
-			check = 1;
+			rep = 1;
 	}
 
-	return check;
+	return rep;
 }
 
 unsigned int number_of_words(char * input_str) {
