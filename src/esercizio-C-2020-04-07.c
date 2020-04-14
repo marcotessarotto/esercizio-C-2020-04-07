@@ -9,44 +9,55 @@ typedef struct{
 
 
 int getRandomNumber(int upper_limit);
-void print_word(word w);
+void print_word(word words);
 
 int main ()
 {
 
-	int numbers_of_words = 0;
-	word * words;
+	int number_of_words = 0;
+	word * words = NULL;
+
 
 	char ch = getchar();
-	int count_letters_in_the_word = 1;
-
+	int counts_letters_in_a_word = 1;
+	int allocated_space = 2;
+	//
+	//words = calloc(1, sizeof(word));
+	//words[number_of_words -1].char_array = calloc(allocated_space, sizeof(char));
 	while(ch != EOF){
 
-		if(count_letters_in_the_word == 1){
-			numbers_of_words++;
-			words = realloc(words, numbers_of_words * sizeof(word));
+		if(counts_letters_in_a_word == 1){
+			number_of_words++;
+			words = realloc(words, number_of_words * sizeof(word));
+			words[number_of_words -1].char_array = calloc(allocated_space, sizeof(char));
 		}
 
 		if(ch == ' '){
-			count_letters_in_the_word = 0;
-		}else{
-			words->char_array = realloc(words->char_array, count_letters_in_the_word * sizeof(char));
-			words->char_array[count_letters_in_the_word-1] = ch;
-			words->length_char_array = count_letters_in_the_word;
+			counts_letters_in_a_word = 0;
+		}
+
+		if(counts_letters_in_a_word > allocated_space){
+			allocated_space = allocated_space * 2;
+			words[number_of_words -1].char_array = realloc(words[number_of_words -1].char_array, allocated_space * sizeof(char));
+		}
+
+		if(ch != ' '){
+			words[number_of_words -1].char_array[counts_letters_in_a_word -1] = ch;
+			words[number_of_words -1].length_char_array = counts_letters_in_a_word;
 		}
 
 		ch = getchar();
-		count_letters_in_the_word++;
-
+		counts_letters_in_a_word++;
 	}
 
-	for(int i=0 ; i<numbers_of_words ; i++){
-		for(int j=0 ; j<words[i].length_char_array ; j++){
-			printf("%c", words[i].char_array[j] );
-		}
-		putchar('\n');
+
+	putchar('\n');
+	for(int i=0 ; i<number_of_words ; i++){
+		print_word(words[i]);
 	}
-	printf("\n");
+
+
+
 
 
 
@@ -62,9 +73,9 @@ int getRandomNumber(int upper_limit){
 	return random_number;
 }
 
-void print_word(word w){
-	for(int i=0 ; i<w.length_char_array ; i++){
-		printf("%c", w.char_array[i]);
+void print_word(word words){
+	for(int i=0 ; i< words.length_char_array ; i++){
+		printf("%c", words.char_array[i]);
 	}
 	printf(" ");
 }
