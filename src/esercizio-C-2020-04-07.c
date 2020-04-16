@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <time.h>
 
 char** array_remove(char **arr, int len, int index)
@@ -33,6 +32,12 @@ int main(int argc, char *argv[])
 		words--;
 	}
 
-	free(new_arr);
+	/*
+	 * If no words have been passed to the program, freeing new_arr would
+	 * imply freeing argv, and this yields an "invalid pointer" error.
+	 */
+	if (argc > 1)
+		free(new_arr);
+
 	return 0;
 }
