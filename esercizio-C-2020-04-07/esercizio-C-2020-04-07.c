@@ -41,25 +41,32 @@ void randomize(){
 
 	int indice=0;
 	int u;
+	int w;
+
+	unsigned int seed = 2;
 
 	for(int i=0; i<9; i++){
-		time_t t = time(NULL);
 
-		//printf("%ld ", t);
-
-		srand(t);
+		srand(seed);
 
 		u = rand()%9;
+
+		while(u == w || stringa[u].parola == NULL){
+			u = rand()%9;
+		}
 
 		memcpy(&frase[indice], stringa[u].parola, stringa[u].length);
 
 		indice += stringa[u].length;
 
+		stringa[u].parola = NULL;
+
 		if(i<8){	//mette uno spazio tra le parole
 		frase[indice] = ' ';
 		indice++;
 		}
-
+		seed++;
+		w = u;
 	}
 	printf("%s", frase);
 }
