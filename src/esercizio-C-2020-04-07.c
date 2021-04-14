@@ -86,7 +86,6 @@ int main() {
 
 	printf("\n");
 
-
 	srand(1245); // inizializziamo il seed del generatore di numeri pseudocasuali
 
 	// randomizzare le parole per produrre una nuova stringa di caratteri
