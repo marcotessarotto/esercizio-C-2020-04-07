@@ -34,8 +34,6 @@ int main() {
 	char str[] = "hello world mi chiamo pino sono date delle stringhe";
 
 	// esempio 006.4
-	//char str[] = "hello world mi chiamo pino sono date delle stringhe";
-	//char str[] = "prima seconda   terza quarta";
 	char s[] = " "; // caratteri separatori da utilizzare per la suddivisione
 	char *token;
 
